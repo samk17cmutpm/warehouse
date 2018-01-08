@@ -133,11 +133,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             }
             override fun onPageSelected(position: Int) {
-                if (mPrimaryAnimator != null && mPrimaryAnimator!!.isRunning)
-                    mPrimaryAnimator!!.cancel()
 
-                if (mAccentAnimator != null && mAccentAnimator!!.isRunning)
-                    mAccentAnimator!!.cancel()
+                if (mPrimaryAnimator?.isRunning == true)
+                    mPrimaryAnimator?.cancel()
+
+                if (mAccentAnimator?.isRunning == true)
+                    mAccentAnimator?.cancel()
 
                 val item = mItems.get(position)
                 val primary = CCFAnimator.rgb(mPrimaryColor, item.primaryColor)
@@ -145,8 +146,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     mWindowCompat.setStatusBarColor(color)
                 }
                 )
-                mPrimaryAnimator!!.setDuration(250L)
-                mPrimaryAnimator!!.start()
+                mPrimaryAnimator?.setDuration(250L)
+                mPrimaryAnimator?.start()
 
                 val accent = CCFAnimator.rgb(
                         accentColor(mAccentColor, mPrimaryColor),
@@ -158,25 +159,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     mToolbar.setBackgroundColor(color)
                 })
 
-                mAccentAnimator!!.setDuration(250L)
-                mAccentAnimator!!.start()
+                mAccentAnimator?.setDuration(250L)
+                mAccentAnimator?.start()
 
                 mPrimaryColor = item.primaryColor
                 mAccentColor = item.accentColor
 
                 when (position) {
-                    InventoryType.HOME -> {
-                        mBottomNavigationView.selectedItemId = R.id.navigation_home
-                    }
-                    InventoryType.DASHBOARD -> {
-                        mBottomNavigationView.selectedItemId = R.id.navigation_dashboard
-                    }
-                    InventoryType.NOTIFICATIONS -> {
-                        mBottomNavigationView.selectedItemId = R.id.navigation_notifications
-                    }
-                    InventoryType.SETTINGS -> {
-                        mBottomNavigationView.selectedItemId = R.id.navigation_settings
-                    }
+                    InventoryType.HOME -> mBottomNavigationView.selectedItemId = R.id.navigation_home
+                    InventoryType.DASHBOARD -> mBottomNavigationView.selectedItemId = R.id.navigation_dashboard
+                    InventoryType.NOTIFICATIONS -> mBottomNavigationView.selectedItemId = R.id.navigation_notifications
+                    InventoryType.SETTINGS -> mBottomNavigationView.selectedItemId = R.id.navigation_settings
                 }
             }
 
@@ -241,7 +234,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun accentColor(accentColor: Int, primaryColor: Int): Int {
-        var out: Int
+        val out: Int
         val animator = CCFAnimator.rgb(accentColor, primaryColor)
         out = animator.getColor(1F)
         return out
@@ -261,18 +254,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         override fun getPageTitle(position: Int): CharSequence {
             when (position) {
-                InventoryType.HOME -> {
-                    return R.string.title_home.toString()
-                }
-                InventoryType.DASHBOARD -> {
-                    return R.string.title_dashboard.toString()
-                }
-                InventoryType.NOTIFICATIONS -> {
-                    return R.string.title_notifications.toString()
-                }
-                InventoryType.SETTINGS -> {
-                    return R.string.title_settings.toString()
-                }
+                InventoryType.HOME -> return R.string.title_home.toString()
+                InventoryType.DASHBOARD -> return R.string.title_dashboard.toString()
+                InventoryType.NOTIFICATIONS -> return R.string.title_notifications.toString()
+                InventoryType.SETTINGS -> return R.string.title_settings.toString()
             }
             return R.string.title_home.toString()
         }
