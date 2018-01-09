@@ -3,34 +3,38 @@ package be.mine.warehouse.mvp
 import android.util.Log
 import be.mine.warehouse.base.BaseConsumer
 import be.mine.warehouse.model.Post
-import be.mine.warehouse.net.RestApi
-import be.mine.warehouse.net.ServiceGenerator
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import be.mine.warehouse.data.repositories.PostDataRepository
+import be.mine.warehouse.domain.interactors.FetchingPostInteractor
+
 /**
  * Created by sam_nguyen on 1/5/18.
  */
-class MVPPresenter : MVPContract.Presenter {
+class MVPPresenter constructor(val mPostRepository: PostDataRepository) : MVPContract.Presenter {
 
     private lateinit var mView: MVPContract.View
 
-    private val mRestApiService: RestApi = ServiceGenerator.createService(RestApi::class.java)
+    private var mFetchingPostInteractor: FetchingPostInteractor
 
+    init {
+        mFetchingPostInteractor = FetchingPostInteractor(mPostRepository)
+    }
     override fun detachView() {
 
     }
 
-    override fun fetchData() {
-        mRestApiService.fetchPost()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : BaseConsumer<List<Post>>() {
-                    override fun onSuccess(data: List<Post>) {
-                    }
-                })
+    override fun fetchPost() {
+        mFetchingPostInteractor.run(object : BaseConsumer<List<Post>>() {
+            override fun onSuccess(data: List<Post>) {
+                showData(data)
+            }
+        }, FetchingPostInteractor.RequestValues())
     }
 
     override fun attachView(view: MVPContract.View) {
         mView = view
+    }
+
+    fun showData(posts: List<Post>) {
+        Log.e("showPost", posts.size.toString())
     }
 }

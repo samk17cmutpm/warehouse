@@ -3,13 +3,15 @@ package be.mine.warehouse.mvp
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import be.mine.warehouse.R
+import be.mine.warehouse.data.repositories.PostDataRepository
+import be.mine.warehouse.model.Post
 
 class MVPActivity : AppCompatActivity(), MVPContract.View {
 
     private lateinit var mPresenter: MVPContract.Presenter
 
     override fun initPresenter() {
-        mPresenter = MVPPresenter()
+        mPresenter = MVPPresenter(PostDataRepository())
         mPresenter.attachView(this)
     }
 
@@ -18,10 +20,10 @@ class MVPActivity : AppCompatActivity(), MVPContract.View {
     }
 
     override fun initData() {
-        mPresenter.fetchData()
+        mPresenter.fetchPost()
     }
 
-    override fun showData() {
+    override fun showPost(posts: List<Post>) {
 
     }
 

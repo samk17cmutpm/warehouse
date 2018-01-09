@@ -2,6 +2,7 @@ package be.mine.warehouse.mvp
 
 import be.mine.warehouse.base.BasePresenter
 import be.mine.warehouse.base.BaseView
+import be.mine.warehouse.model.Post
 
 /**
  * Created by sam_nguyen on 1/5/18.
@@ -9,11 +10,11 @@ import be.mine.warehouse.base.BaseView
 interface MVPContract {
 
     interface View : BaseView {
-        fun showData()
+        fun showPost(posts: List<Post>)
     }
 
     interface Presenter : BasePresenter<View> {
-        fun fetchData()
+        fun fetchPost()
     }
 
 }

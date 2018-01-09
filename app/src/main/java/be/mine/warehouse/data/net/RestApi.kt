@@ -1,4 +1,4 @@
-package be.mine.warehouse.net
+package be.mine.warehouse.data.net
 
 import be.mine.warehouse.model.Post
 import io.reactivex.Observable

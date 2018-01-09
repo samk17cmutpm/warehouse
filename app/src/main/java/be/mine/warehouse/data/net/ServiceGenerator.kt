@@ -1,4 +1,4 @@
-package be.mine.warehouse.net
+package be.mine.warehouse.data.net
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
