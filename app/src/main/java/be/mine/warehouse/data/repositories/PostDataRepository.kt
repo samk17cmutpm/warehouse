@@ -6,11 +6,12 @@ import be.mine.warehouse.domain.repositories.PostRepository
 import be.mine.warehouse.model.Post
 import io.reactivex.Observable
 import retrofit2.Response
+import javax.inject.Inject
 
 /**
  * Created by sam_nguyen on 1/9/18.
  */
-class PostDataRepository : PostRepository {
+class PostDataRepository @Inject constructor(): PostRepository {
 
     val mRestApi = ServiceGenerator.createService(RestApi::class.java)
 
