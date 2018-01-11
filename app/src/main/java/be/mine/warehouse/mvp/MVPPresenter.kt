@@ -5,11 +5,12 @@ import be.mine.warehouse.base.BaseConsumer
 import be.mine.warehouse.model.Post
 import be.mine.warehouse.data.repositories.PostDataRepository
 import be.mine.warehouse.domain.interactors.FetchingPostInteractor
+import javax.inject.Inject
 
 /**
  * Created by sam_nguyen on 1/5/18.
  */
-class MVPPresenter constructor(val mPostRepository: PostDataRepository) : MVPContract.Presenter {
+class MVPPresenter @Inject constructor(val mPostRepository: PostDataRepository) : MVPContract.Presenter {
 
     private lateinit var mView: MVPContract.View
 
